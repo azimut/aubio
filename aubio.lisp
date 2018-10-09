@@ -22,6 +22,13 @@
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_onset ,var))))
 
+(defmacro with-tempo
+    ((var &key (method "specdiff") (buf-size 1024) (hop-size 512) (sample-rate 44100))
+     &body body)
+  `(let ((,var (aubio:new_aubio_tempo ,method ,buf-size ,hop-size ,sample-rate)))
+     (unwind-protect (progn ,@body)
+       (aubio:del_aubio_tempo ,var))))
+
 (defmacro with-source
     ((var filepath &key (sample-rate 44100) (window-size 512)) &body body)
   `(progn
@@ -55,6 +62,37 @@
                  (when (> onset-new-peak 0)
                    (push (aubio:aubio_onset_get_last_s onset) times))
                  (when (not (= 512 no-of-bytes-read))
+                   ;; Let's output one last onset to mark the end of the file
+                   (push (/ total-frames-counter 44100f0) times)
+                   (return (reverse times)))))))))))
+
+
+;;--------------------------------------------------
+
+(defun test-beats (filename)
+  "returns a list of the seconds where a set is found"
+  (declare (string filename))
+  (let ((total-frames-counter 0))
+    (with-source (source filename)
+      (with-tempo (tempo :buf-size 1024 :hop-size 512)
+        (with-fvecs ((sample-buffer 512)
+                     (out-fvec 1))
+          (cffi:with-foreign-object (read-buffer :int)
+            (loop
+               :with times = '()
+               :do
+               ;; Perform onset calculation
+               (aubio:aubio_source_do source sample-buffer read-buffer)
+               (sb-int:with-float-traps-masked (:divide-by-zero)
+                 (aubio:aubio_tempo_do tempo sample-buffer out-fvec))
+               ;; Retrieve result
+               (let ((in-beat (aubio:fvec_get_sample out-fvec 0))
+                     (no-of-bytes-read (cffi:mem-ref read-buffer :int)))
+                 (incf total-frames-counter no-of-bytes-read)
+                 (when (> in-beat 0)
+                   (push (aubio:aubio_tempo_get_last_s tempo) times))
+                 (when (not (= 512 no-of-bytes-read))
+                   ;; Let's output one last onset to mark the end of the file
                    (push (/ total-frames-counter 44100f0) times)
                    (return (reverse times)))))))))))
 
