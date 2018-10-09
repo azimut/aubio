@@ -18,6 +18,7 @@ To get a list of where the beats occur in seconds:
 
 * [ruby-aubio](https://github.com/xavriley/ruby-aubio) - where some of the examples came from
 * [sonic-pi source](https://github.com/samaaron/sonic-pi/blob/0fff19db99350ab143a3a5c3e353c73555ca3574/app/server/ruby/lib/sonicpi/samplebuffer.rb) and [sonic-pi doc](https://github.com/samaaron/sonic-pi/blob/master/etc/doc/tutorial/A.12-sample-slicing.md) - aubio being used on sonic-pi
+* [vamp-aubio-plugins](https://github.com/aubio/vamp-aubio-plugins) - c++ examples
 
 ## TODO
 - BPM
