@@ -30,7 +30,10 @@
       (unwind-protect (progn ,@body)
         (aubio:del_aubio_source ,var)))))
 
+;;----------------------------------------
+
 (defun test-onset (filename)
+  "returns a list of the seconds where a set is found"
   (declare (string filename))
   (let ((total-frames-counter 0))
     (with-source (source filename)
