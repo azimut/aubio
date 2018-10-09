@@ -1,7 +1,6 @@
 # aubio
-### _Your Name <your.name@example.com>_
 
-This is a project to do ... something.
+Lisp bindings for [aubio](https://aubio.org/). Needs aubio compiled with libsndfile support.
 
 ## License
 
