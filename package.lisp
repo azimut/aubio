@@ -6,4 +6,5 @@
            #:with-fvec
            #:with-onset
            #:with-source
-           #:test-onset))
+           #:test-onset
+           #:test-beats))
