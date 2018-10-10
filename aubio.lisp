@@ -17,8 +17,8 @@
     ((var &key (method "default") (buf-size 1024) (hop-size 512) (sample-rate 44100))
      &body body)
   `(let ((,var (aubio:new_aubio_onset ,method ,buf-size ,hop-size ,sample-rate)))
-     (aubio:aubio_onset_set_minioi_ms ,var 12f0)
-     (aubio:aubio_onset_set_threshold ,var .3f0)
+     (aubio:aubio_onset_set_minioi_ms ,var (sample 12))
+     (aubio:aubio_onset_set_threshold ,var (sample .3))
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_onset ,var))))
 
@@ -65,7 +65,6 @@
                    ;; Let's output one last onset to mark the end of the file
                    (push (/ total-frames-counter 44100f0) times)
                    (return (reverse times)))))))))))
-
 
 ;;--------------------------------------------------
 

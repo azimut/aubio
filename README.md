@@ -3,14 +3,24 @@
 Lisp bindings for [aubio](https://aubio.org/). Needs aubio compiled with libsndfile support for examples to work.
 
 ## Usage
+
+If aubio was compiled to use `float` for samples (default) use:
+```
+> (ql:quickload :aubio)
+```
+If instead aubio was compiled to use `double` for samples:
+```
+> (ql:quickload :aubio/double)
+```
+
 To get a list of where the sets occur in seconds:
 ```
-> (aubio::test-onset "/some.wav")
+> (aubio::test-onset "/loop_amen.wav")
 (0.0 0.21201815 0.4361905 0.66521543 0.8878458 1.0956463 1.3077097 1.5368707 1.7533107)
 ```
 To get a list of where the beats occur in seconds:
 ```
-> (aubio::test-beats "/other.wav")
+> (aubio::test-beats "/loop_amen_full.wav")
 (1.5101588 1.927415 2.3446486 2.7619047 3.2264853 3.6475737 4.0686393 4.7227664 5.143628 5.5645123 6.2237186)
 ```
 

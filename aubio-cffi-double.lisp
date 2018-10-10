@@ -9,15 +9,11 @@
 
 
 
-(cl:defconstant HAVE_AUBIO_DOUBLE 0)
-
-(cl:export 'HAVE_AUBIO_DOUBLE)
-
-(cl:defconstant AUBIO_SMPL_FMT "%f")
+(cl:defconstant AUBIO_SMPL_FMT "%lf")
 
 (cl:export 'AUBIO_SMPL_FMT)
 
-(cl:defconstant AUBIO_LSMP_FMT "%lf")
+(cl:defconstant AUBIO_LSMP_FMT "%Lf")
 
 (cl:export 'AUBIO_LSMP_FMT)
 
@@ -41,7 +37,7 @@
 
 (cl:export 'del_fvec)
 
-(cffi:defcfun ("fvec_get_sample" fvec_get_sample) :float
+(cffi:defcfun ("fvec_get_sample" fvec_get_sample) :double
   (s :pointer)
   (position :unsigned-int))
 
@@ -49,7 +45,7 @@
 
 (cffi:defcfun ("fvec_set_sample" fvec_set_sample) :void
   (s :pointer)
-  (data :float)
+  (data :double)
   (position :unsigned-int))
 
 (cl:export 'fvec_set_sample)
@@ -66,7 +62,7 @@
 
 (cffi:defcfun ("fvec_set_all" fvec_set_all) :void
   (s :pointer)
-  (val :float))
+  (val :double))
 
 (cl:export 'fvec_set_all)
 
@@ -129,25 +125,25 @@
 
 (cffi:defcfun ("cvec_norm_set_sample" cvec_norm_set_sample) :void
   (s :pointer)
-  (val :float)
+  (val :double)
   (position :unsigned-int))
 
 (cl:export 'cvec_norm_set_sample)
 
 (cffi:defcfun ("cvec_phas_set_sample" cvec_phas_set_sample) :void
   (s :pointer)
-  (val :float)
+  (val :double)
   (position :unsigned-int))
 
 (cl:export 'cvec_phas_set_sample)
 
-(cffi:defcfun ("cvec_norm_get_sample" cvec_norm_get_sample) :float
+(cffi:defcfun ("cvec_norm_get_sample" cvec_norm_get_sample) :double
   (s :pointer)
   (position :unsigned-int))
 
 (cl:export 'cvec_norm_get_sample)
 
-(cffi:defcfun ("cvec_phas_get_sample" cvec_phas_get_sample) :float
+(cffi:defcfun ("cvec_phas_get_sample" cvec_phas_get_sample) :double
   (s :pointer)
   (position :unsigned-int))
 
@@ -176,7 +172,7 @@
 
 (cffi:defcfun ("cvec_norm_set_all" cvec_norm_set_all) :void
   (s :pointer)
-  (val :float))
+  (val :double))
 
 (cl:export 'cvec_norm_set_all)
 
@@ -192,7 +188,7 @@
 
 (cffi:defcfun ("cvec_phas_set_all" cvec_phas_set_all) :void
   (s :pointer)
-  (val :float))
+  (val :double))
 
 (cl:export 'cvec_phas_set_all)
 
@@ -213,7 +209,7 @@
 
 (cffi:defcfun ("cvec_logmag" cvec_logmag) :void
   (s :pointer)
-  (lambda :float))
+  (lambda :double))
 
 (cl:export 'cvec_logmag)
 
@@ -237,7 +233,7 @@
 
 (cl:export 'del_lvec)
 
-(cffi:defcfun ("lvec_get_sample" lvec_get_sample) :double
+(cffi:defcfun ("lvec_get_sample" lvec_get_sample) :pointer
   (s :pointer)
   (position :unsigned-int))
 
@@ -245,7 +241,7 @@
 
 (cffi:defcfun ("lvec_set_sample" lvec_set_sample) :void
   (s :pointer)
-  (data :double)
+  (data :pointer)
   (position :unsigned-int))
 
 (cl:export 'lvec_set_sample)
@@ -262,7 +258,7 @@
 
 (cffi:defcfun ("lvec_set_all" lvec_set_all) :void
   (s :pointer)
-  (val :float))
+  (val :double))
 
 (cl:export 'lvec_set_all)
 
@@ -300,7 +296,7 @@
 
 (cl:export 'del_fmat)
 
-(cffi:defcfun ("fmat_get_sample" fmat_get_sample) :float
+(cffi:defcfun ("fmat_get_sample" fmat_get_sample) :double
   (s :pointer)
   (channel :unsigned-int)
   (position :unsigned-int))
@@ -309,7 +305,7 @@
 
 (cffi:defcfun ("fmat_set_sample" fmat_set_sample) :void
   (s :pointer)
-  (data :float)
+  (data :double)
   (channel :unsigned-int)
   (position :unsigned-int))
 
@@ -340,7 +336,7 @@
 
 (cffi:defcfun ("fmat_set" fmat_set) :void
   (s :pointer)
-  (val :float))
+  (val :double))
 
 (cl:export 'fmat_set)
 
@@ -390,46 +386,46 @@
 
 (cl:export 'fvec_set_window)
 
-(cffi:defcfun ("aubio_unwrap2pi" aubio_unwrap2pi) :float
-  (phase :float))
+(cffi:defcfun ("aubio_unwrap2pi" aubio_unwrap2pi) :double
+  (phase :double))
 
 (cl:export 'aubio_unwrap2pi)
 
-(cffi:defcfun ("aubio_bintomidi" aubio_bintomidi) :float
-  (bin :float)
-  (samplerate :float)
-  (fftsize :float))
+(cffi:defcfun ("aubio_bintomidi" aubio_bintomidi) :double
+  (bin :double)
+  (samplerate :double)
+  (fftsize :double))
 
 (cl:export 'aubio_bintomidi)
 
-(cffi:defcfun ("aubio_miditobin" aubio_miditobin) :float
-  (midi :float)
-  (samplerate :float)
-  (fftsize :float))
+(cffi:defcfun ("aubio_miditobin" aubio_miditobin) :double
+  (midi :double)
+  (samplerate :double)
+  (fftsize :double))
 
 (cl:export 'aubio_miditobin)
 
-(cffi:defcfun ("aubio_bintofreq" aubio_bintofreq) :float
-  (bin :float)
-  (samplerate :float)
-  (fftsize :float))
+(cffi:defcfun ("aubio_bintofreq" aubio_bintofreq) :double
+  (bin :double)
+  (samplerate :double)
+  (fftsize :double))
 
 (cl:export 'aubio_bintofreq)
 
-(cffi:defcfun ("aubio_freqtobin" aubio_freqtobin) :float
-  (freq :float)
-  (samplerate :float)
-  (fftsize :float))
+(cffi:defcfun ("aubio_freqtobin" aubio_freqtobin) :double
+  (freq :double)
+  (samplerate :double)
+  (fftsize :double))
 
 (cl:export 'aubio_freqtobin)
 
-(cffi:defcfun ("aubio_freqtomidi" aubio_freqtomidi) :float
-  (freq :float))
+(cffi:defcfun ("aubio_freqtomidi" aubio_freqtomidi) :double
+  (freq :double))
 
 (cl:export 'aubio_freqtomidi)
 
-(cffi:defcfun ("aubio_miditofreq" aubio_miditofreq) :float
-  (midi :float))
+(cffi:defcfun ("aubio_miditofreq" aubio_miditofreq) :double
+  (midi :double))
 
 (cl:export 'aubio_miditofreq)
 
@@ -437,36 +433,36 @@
 
 (cl:export 'aubio_cleanup)
 
-(cffi:defcfun ("aubio_zero_crossing_rate" aubio_zero_crossing_rate) :float
+(cffi:defcfun ("aubio_zero_crossing_rate" aubio_zero_crossing_rate) :double
   (v :pointer))
 
 (cl:export 'aubio_zero_crossing_rate)
 
-(cffi:defcfun ("aubio_level_lin" aubio_level_lin) :float
+(cffi:defcfun ("aubio_level_lin" aubio_level_lin) :double
   (v :pointer))
 
 (cl:export 'aubio_level_lin)
 
-(cffi:defcfun ("aubio_db_spl" aubio_db_spl) :float
+(cffi:defcfun ("aubio_db_spl" aubio_db_spl) :double
   (v :pointer))
 
 (cl:export 'aubio_db_spl)
 
 (cffi:defcfun ("aubio_silence_detection" aubio_silence_detection) :unsigned-int
   (v :pointer)
-  (threshold :float))
+  (threshold :double))
 
 (cl:export 'aubio_silence_detection)
 
-(cffi:defcfun ("aubio_level_detection" aubio_level_detection) :float
+(cffi:defcfun ("aubio_level_detection" aubio_level_detection) :double
   (v :pointer)
-  (threshold :float))
+  (threshold :double))
 
 (cl:export 'aubio_level_detection)
 
 (cffi:defcfun ("fvec_clamp" fvec_clamp) :void
   (in :pointer)
-  (absmax :float))
+  (absmax :double))
 
 (cl:export 'fvec_clamp)
 
@@ -522,12 +518,12 @@
 
 (cffi:defcfun ("fvec_pow" fvec_pow) :void
   (s :pointer)
-  (pow :float))
+  (pow :double))
 
 (cl:export 'fvec_pow)
 
 (cffi:defcfun ("new_aubio_resampler" new_aubio_resampler) :pointer
-  (ratio :float)
+  (ratio :double)
   (type :unsigned-int))
 
 (cl:export 'new_aubio_resampler)
@@ -607,20 +603,20 @@
 
 (cffi:defcfun ("aubio_filter_set_biquad" aubio_filter_set_biquad) :unsigned-int
   (f :pointer)
-  (b0 :double)
-  (b1 :double)
-  (b2 :double)
-  (a1 :double)
-  (a2 :double))
+  (b0 :pointer)
+  (b1 :pointer)
+  (b2 :pointer)
+  (a1 :pointer)
+  (a2 :pointer))
 
 (cl:export 'aubio_filter_set_biquad)
 
 (cffi:defcfun ("new_aubio_filter_biquad" new_aubio_filter_biquad) :pointer
-  (b0 :double)
-  (b1 :double)
-  (b2 :double)
-  (a1 :double)
-  (a2 :double))
+  (b0 :pointer)
+  (b1 :pointer)
+  (b2 :pointer)
+  (a1 :pointer)
+  (a2 :pointer))
 
 (cl:export 'new_aubio_filter_biquad)
 
@@ -817,13 +813,13 @@
 (cffi:defcfun ("aubio_filterbank_set_triangle_bands" aubio_filterbank_set_triangle_bands) :unsigned-int
   (fb :pointer)
   (freqs :pointer)
-  (samplerate :float))
+  (samplerate :double))
 
 (cl:export 'aubio_filterbank_set_triangle_bands)
 
 (cffi:defcfun ("aubio_filterbank_set_mel_coeffs_slaney" aubio_filterbank_set_mel_coeffs_slaney) :unsigned-int
   (fb :pointer)
-  (samplerate :float))
+  (samplerate :double))
 
 (cl:export 'aubio_filterbank_set_mel_coeffs_slaney)
 
@@ -885,22 +881,22 @@
 
 (cffi:defcfun ("aubio_spectral_whitening_set_relax_time" aubio_spectral_whitening_set_relax_time) :unsigned-int
   (o :pointer)
-  (relax_time :float))
+  (relax_time :double))
 
 (cl:export 'aubio_spectral_whitening_set_relax_time)
 
-(cffi:defcfun ("aubio_spectral_whitening_get_relax_time" aubio_spectral_whitening_get_relax_time) :float
+(cffi:defcfun ("aubio_spectral_whitening_get_relax_time" aubio_spectral_whitening_get_relax_time) :double
   (o :pointer))
 
 (cl:export 'aubio_spectral_whitening_get_relax_time)
 
 (cffi:defcfun ("aubio_spectral_whitening_set_floor" aubio_spectral_whitening_set_floor) :unsigned-int
   (o :pointer)
-  (floor :float))
+  (floor :double))
 
 (cl:export 'aubio_spectral_whitening_set_floor)
 
-(cffi:defcfun ("aubio_spectral_whitening_get_floor" aubio_spectral_whitening_get_floor) :float
+(cffi:defcfun ("aubio_spectral_whitening_get_floor" aubio_spectral_whitening_get_floor) :double
   (o :pointer))
 
 (cl:export 'aubio_spectral_whitening_get_floor)
@@ -931,19 +927,19 @@
 
 (cffi:defcfun ("aubio_tss_set_threshold" aubio_tss_set_threshold) :unsigned-int
   (o :pointer)
-  (thrs :float))
+  (thrs :double))
 
 (cl:export 'aubio_tss_set_threshold)
 
 (cffi:defcfun ("aubio_tss_set_alpha" aubio_tss_set_alpha) :unsigned-int
   (o :pointer)
-  (alpha :float))
+  (alpha :double))
 
 (cl:export 'aubio_tss_set_alpha)
 
 (cffi:defcfun ("aubio_tss_set_beta" aubio_tss_set_beta) :unsigned-int
   (o :pointer)
-  (beta :float))
+  (beta :double))
 
 (cl:export 'aubio_tss_set_beta)
 
@@ -956,11 +952,11 @@
 
 (cffi:defcfun ("aubio_pitch_set_tolerance" aubio_pitch_set_tolerance) :unsigned-int
   (o :pointer)
-  (tol :float))
+  (tol :double))
 
 (cl:export 'aubio_pitch_set_tolerance)
 
-(cffi:defcfun ("aubio_pitch_get_tolerance" aubio_pitch_get_tolerance) :float
+(cffi:defcfun ("aubio_pitch_get_tolerance" aubio_pitch_get_tolerance) :double
   (o :pointer))
 
 (cl:export 'aubio_pitch_get_tolerance)
@@ -986,16 +982,16 @@
 
 (cffi:defcfun ("aubio_pitch_set_silence" aubio_pitch_set_silence) :unsigned-int
   (o :pointer)
-  (silence :float))
+  (silence :double))
 
 (cl:export 'aubio_pitch_set_silence)
 
-(cffi:defcfun ("aubio_pitch_get_silence" aubio_pitch_get_silence) :float
+(cffi:defcfun ("aubio_pitch_get_silence" aubio_pitch_get_silence) :double
   (o :pointer))
 
 (cl:export 'aubio_pitch_get_silence)
 
-(cffi:defcfun ("aubio_pitch_get_confidence" aubio_pitch_get_confidence) :float
+(cffi:defcfun ("aubio_pitch_get_confidence" aubio_pitch_get_confidence) :double
   (o :pointer))
 
 (cl:export 'aubio_pitch_get_confidence)
@@ -1020,12 +1016,12 @@
 
 (cl:export 'aubio_onset_get_last)
 
-(cffi:defcfun ("aubio_onset_get_last_s" aubio_onset_get_last_s) :float
+(cffi:defcfun ("aubio_onset_get_last_s" aubio_onset_get_last_s) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_last_s)
 
-(cffi:defcfun ("aubio_onset_get_last_ms" aubio_onset_get_last_ms) :float
+(cffi:defcfun ("aubio_onset_get_last_ms" aubio_onset_get_last_ms) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_last_ms)
@@ -1036,46 +1032,46 @@
 
 (cl:export 'aubio_onset_set_awhitening)
 
-(cffi:defcfun ("aubio_onset_get_awhitening" aubio_onset_get_awhitening) :float
+(cffi:defcfun ("aubio_onset_get_awhitening" aubio_onset_get_awhitening) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_awhitening)
 
 (cffi:defcfun ("aubio_onset_set_compression" aubio_onset_set_compression) :unsigned-int
   (o :pointer)
-  (lambda :float))
+  (lambda :double))
 
 (cl:export 'aubio_onset_set_compression)
 
-(cffi:defcfun ("aubio_onset_get_compression" aubio_onset_get_compression) :float
+(cffi:defcfun ("aubio_onset_get_compression" aubio_onset_get_compression) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_compression)
 
 (cffi:defcfun ("aubio_onset_set_silence" aubio_onset_set_silence) :unsigned-int
   (o :pointer)
-  (silence :float))
+  (silence :double))
 
 (cl:export 'aubio_onset_set_silence)
 
-(cffi:defcfun ("aubio_onset_get_silence" aubio_onset_get_silence) :float
+(cffi:defcfun ("aubio_onset_get_silence" aubio_onset_get_silence) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_silence)
 
-(cffi:defcfun ("aubio_onset_get_descriptor" aubio_onset_get_descriptor) :float
+(cffi:defcfun ("aubio_onset_get_descriptor" aubio_onset_get_descriptor) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_descriptor)
 
-(cffi:defcfun ("aubio_onset_get_thresholded_descriptor" aubio_onset_get_thresholded_descriptor) :float
+(cffi:defcfun ("aubio_onset_get_thresholded_descriptor" aubio_onset_get_thresholded_descriptor) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_thresholded_descriptor)
 
 (cffi:defcfun ("aubio_onset_set_threshold" aubio_onset_set_threshold) :unsigned-int
   (o :pointer)
-  (threshold :float))
+  (threshold :double))
 
 (cl:export 'aubio_onset_set_threshold)
 
@@ -1087,13 +1083,13 @@
 
 (cffi:defcfun ("aubio_onset_set_minioi_s" aubio_onset_set_minioi_s) :unsigned-int
   (o :pointer)
-  (minioi :float))
+  (minioi :double))
 
 (cl:export 'aubio_onset_set_minioi_s)
 
 (cffi:defcfun ("aubio_onset_set_minioi_ms" aubio_onset_set_minioi_ms) :unsigned-int
   (o :pointer)
-  (minioi :float))
+  (minioi :double))
 
 (cl:export 'aubio_onset_set_minioi_ms)
 
@@ -1105,13 +1101,13 @@
 
 (cffi:defcfun ("aubio_onset_set_delay_s" aubio_onset_set_delay_s) :unsigned-int
   (o :pointer)
-  (delay :float))
+  (delay :double))
 
 (cl:export 'aubio_onset_set_delay_s)
 
 (cffi:defcfun ("aubio_onset_set_delay_ms" aubio_onset_set_delay_ms) :unsigned-int
   (o :pointer)
-  (delay :float))
+  (delay :double))
 
 (cl:export 'aubio_onset_set_delay_ms)
 
@@ -1120,12 +1116,12 @@
 
 (cl:export 'aubio_onset_get_minioi)
 
-(cffi:defcfun ("aubio_onset_get_minioi_s" aubio_onset_get_minioi_s) :float
+(cffi:defcfun ("aubio_onset_get_minioi_s" aubio_onset_get_minioi_s) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_minioi_s)
 
-(cffi:defcfun ("aubio_onset_get_minioi_ms" aubio_onset_get_minioi_ms) :float
+(cffi:defcfun ("aubio_onset_get_minioi_ms" aubio_onset_get_minioi_ms) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_minioi_ms)
@@ -1135,17 +1131,17 @@
 
 (cl:export 'aubio_onset_get_delay)
 
-(cffi:defcfun ("aubio_onset_get_delay_s" aubio_onset_get_delay_s) :float
+(cffi:defcfun ("aubio_onset_get_delay_s" aubio_onset_get_delay_s) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_delay_s)
 
-(cffi:defcfun ("aubio_onset_get_delay_ms" aubio_onset_get_delay_ms) :float
+(cffi:defcfun ("aubio_onset_get_delay_ms" aubio_onset_get_delay_ms) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_delay_ms)
 
-(cffi:defcfun ("aubio_onset_get_threshold" aubio_onset_get_threshold) :float
+(cffi:defcfun ("aubio_onset_get_threshold" aubio_onset_get_threshold) :double
   (o :pointer))
 
 (cl:export 'aubio_onset_get_threshold)
@@ -1186,54 +1182,54 @@
 
 (cl:export 'aubio_tempo_get_last)
 
-(cffi:defcfun ("aubio_tempo_get_last_s" aubio_tempo_get_last_s) :float
+(cffi:defcfun ("aubio_tempo_get_last_s" aubio_tempo_get_last_s) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_last_s)
 
-(cffi:defcfun ("aubio_tempo_get_last_ms" aubio_tempo_get_last_ms) :float
+(cffi:defcfun ("aubio_tempo_get_last_ms" aubio_tempo_get_last_ms) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_last_ms)
 
 (cffi:defcfun ("aubio_tempo_set_silence" aubio_tempo_set_silence) :unsigned-int
   (o :pointer)
-  (silence :float))
+  (silence :double))
 
 (cl:export 'aubio_tempo_set_silence)
 
-(cffi:defcfun ("aubio_tempo_get_silence" aubio_tempo_get_silence) :float
+(cffi:defcfun ("aubio_tempo_get_silence" aubio_tempo_get_silence) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_silence)
 
 (cffi:defcfun ("aubio_tempo_set_threshold" aubio_tempo_set_threshold) :unsigned-int
   (o :pointer)
-  (threshold :float))
+  (threshold :double))
 
 (cl:export 'aubio_tempo_set_threshold)
 
-(cffi:defcfun ("aubio_tempo_get_threshold" aubio_tempo_get_threshold) :float
+(cffi:defcfun ("aubio_tempo_get_threshold" aubio_tempo_get_threshold) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_threshold)
 
-(cffi:defcfun ("aubio_tempo_get_period" aubio_tempo_get_period) :float
+(cffi:defcfun ("aubio_tempo_get_period" aubio_tempo_get_period) :double
   (bt :pointer))
 
 (cl:export 'aubio_tempo_get_period)
 
-(cffi:defcfun ("aubio_tempo_get_period_s" aubio_tempo_get_period_s) :float
+(cffi:defcfun ("aubio_tempo_get_period_s" aubio_tempo_get_period_s) :double
   (bt :pointer))
 
 (cl:export 'aubio_tempo_get_period_s)
 
-(cffi:defcfun ("aubio_tempo_get_bpm" aubio_tempo_get_bpm) :float
+(cffi:defcfun ("aubio_tempo_get_bpm" aubio_tempo_get_bpm) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_bpm)
 
-(cffi:defcfun ("aubio_tempo_get_confidence" aubio_tempo_get_confidence) :float
+(cffi:defcfun ("aubio_tempo_get_confidence" aubio_tempo_get_confidence) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_confidence)
@@ -1249,7 +1245,7 @@
 
 (cl:export 'aubio_tempo_was_tatum)
 
-(cffi:defcfun ("aubio_tempo_get_last_tatum" aubio_tempo_get_last_tatum) :float
+(cffi:defcfun ("aubio_tempo_get_last_tatum" aubio_tempo_get_last_tatum) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_last_tatum)
@@ -1259,12 +1255,12 @@
 
 (cl:export 'aubio_tempo_get_delay)
 
-(cffi:defcfun ("aubio_tempo_get_delay_s" aubio_tempo_get_delay_s) :float
+(cffi:defcfun ("aubio_tempo_get_delay_s" aubio_tempo_get_delay_s) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_delay_s)
 
-(cffi:defcfun ("aubio_tempo_get_delay_ms" aubio_tempo_get_delay_ms) :float
+(cffi:defcfun ("aubio_tempo_get_delay_ms" aubio_tempo_get_delay_ms) :double
   (o :pointer))
 
 (cl:export 'aubio_tempo_get_delay_ms)
@@ -1277,13 +1273,13 @@
 
 (cffi:defcfun ("aubio_tempo_set_delay_s" aubio_tempo_set_delay_s) :unsigned-int
   (o :pointer)
-  (delay :float))
+  (delay :double))
 
 (cl:export 'aubio_tempo_set_delay_s)
 
 (cffi:defcfun ("aubio_tempo_set_delay_ms" aubio_tempo_set_delay_ms) :unsigned-int
   (o :pointer)
-  (delay :float))
+  (delay :double))
 
 (cl:export 'aubio_tempo_set_delay_ms)
 
@@ -1314,23 +1310,23 @@
 
 (cffi:defcfun ("aubio_notes_set_silence" aubio_notes_set_silence) :unsigned-int
   (o :pointer)
-  (silence :float))
+  (silence :double))
 
 (cl:export 'aubio_notes_set_silence)
 
-(cffi:defcfun ("aubio_notes_get_silence" aubio_notes_get_silence) :float
+(cffi:defcfun ("aubio_notes_get_silence" aubio_notes_get_silence) :double
   (o :pointer))
 
 (cl:export 'aubio_notes_get_silence)
 
-(cffi:defcfun ("aubio_notes_get_minioi_ms" aubio_notes_get_minioi_ms) :float
+(cffi:defcfun ("aubio_notes_get_minioi_ms" aubio_notes_get_minioi_ms) :double
   (o :pointer))
 
 (cl:export 'aubio_notes_get_minioi_ms)
 
 (cffi:defcfun ("aubio_notes_set_minioi_ms" aubio_notes_set_minioi_ms) :unsigned-int
   (o :pointer)
-  (minioi_ms :float))
+  (minioi_ms :double))
 
 (cl:export 'aubio_notes_set_minioi_ms)
 
@@ -1539,22 +1535,22 @@
 
 (cffi:defcfun ("aubio_wavetable_set_freq" aubio_wavetable_set_freq) :unsigned-int
   (o :pointer)
-  (freq :float))
+  (freq :double))
 
 (cl:export 'aubio_wavetable_set_freq)
 
-(cffi:defcfun ("aubio_wavetable_get_freq" aubio_wavetable_get_freq) :float
+(cffi:defcfun ("aubio_wavetable_get_freq" aubio_wavetable_get_freq) :double
   (o :pointer))
 
 (cl:export 'aubio_wavetable_get_freq)
 
 (cffi:defcfun ("aubio_wavetable_set_amp" aubio_wavetable_set_amp) :unsigned-int
   (o :pointer)
-  (amp :float))
+  (amp :double))
 
 (cl:export 'aubio_wavetable_set_amp)
 
-(cffi:defcfun ("aubio_wavetable_get_amp" aubio_wavetable_get_amp) :float
+(cffi:defcfun ("aubio_wavetable_get_amp" aubio_wavetable_get_amp) :double
   (o :pointer))
 
 (cl:export 'aubio_wavetable_get_amp)
@@ -1565,31 +1561,31 @@
 (cl:export 'del_aubio_wavetable)
 
 (cffi:defcfun ("new_aubio_parameter" new_aubio_parameter) :pointer
-  (min_value :float)
-  (max_value :float)
+  (min_value :double)
+  (max_value :double)
   (steps :unsigned-int))
 
 (cl:export 'new_aubio_parameter)
 
 (cffi:defcfun ("aubio_parameter_set_target_value" aubio_parameter_set_target_value) :unsigned-int
   (param :pointer)
-  (value :float))
+  (value :double))
 
 (cl:export 'aubio_parameter_set_target_value)
 
-(cffi:defcfun ("aubio_parameter_get_next_value" aubio_parameter_get_next_value) :float
+(cffi:defcfun ("aubio_parameter_get_next_value" aubio_parameter_get_next_value) :double
   (param :pointer))
 
 (cl:export 'aubio_parameter_get_next_value)
 
-(cffi:defcfun ("aubio_parameter_get_current_value" aubio_parameter_get_current_value) :float
+(cffi:defcfun ("aubio_parameter_get_current_value" aubio_parameter_get_current_value) :double
   (param :pointer))
 
 (cl:export 'aubio_parameter_get_current_value)
 
 (cffi:defcfun ("aubio_parameter_set_current_value" aubio_parameter_set_current_value) :unsigned-int
   (param :pointer)
-  (value :float))
+  (value :double))
 
 (cl:export 'aubio_parameter_set_current_value)
 
@@ -1606,22 +1602,22 @@
 
 (cffi:defcfun ("aubio_parameter_set_min_value" aubio_parameter_set_min_value) :unsigned-int
   (param :pointer)
-  (min_value :float))
+  (min_value :double))
 
 (cl:export 'aubio_parameter_set_min_value)
 
-(cffi:defcfun ("aubio_parameter_get_min_value" aubio_parameter_get_min_value) :float
+(cffi:defcfun ("aubio_parameter_get_min_value" aubio_parameter_get_min_value) :double
   (param :pointer))
 
 (cl:export 'aubio_parameter_get_min_value)
 
 (cffi:defcfun ("aubio_parameter_set_max_value" aubio_parameter_set_max_value) :unsigned-int
   (param :pointer)
-  (max_value :float))
+  (max_value :double))
 
 (cl:export 'aubio_parameter_set_max_value)
 
-(cffi:defcfun ("aubio_parameter_get_max_value" aubio_parameter_get_max_value) :float
+(cffi:defcfun ("aubio_parameter_get_max_value" aubio_parameter_get_max_value) :double
   (param :pointer))
 
 (cl:export 'aubio_parameter_get_max_value)

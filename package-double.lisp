@@ -9,4 +9,4 @@
 
 (in-package :aubio)
 (defun sample (n)
-  (coerce n 'single-float))
+  (coerce n 'double-float))
