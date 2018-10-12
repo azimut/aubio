@@ -3,6 +3,7 @@
   (:export #:with-fvecs
            #:with-fvec
            #:with-onset
+           #:with-tempo
            #:with-source
            #:test-onset
            #:test-beats))

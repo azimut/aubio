@@ -43,10 +43,10 @@
   "returns a list of the seconds where a set is found"
   (declare (string filename))
   (let ((total-frames-counter 0))
-    (with-source (source filename)
-      (with-onset (onset :buf-size 1024 :hop-size 512)
-        (with-fvecs ((sample-buffer 512)
-                     (out-fvec 1))
+    (aubio:with-source (source filename)
+      (aubio:with-onset (onset :buf-size 1024 :hop-size 512)
+        (aubio:with-fvecs ((sample-buffer 512)
+                           (out-fvec 1))
           (cffi:with-foreign-object (read-buffer :int)
             (loop
                :with times = '()
@@ -72,10 +72,10 @@
   "returns a list of the seconds where a set is found"
   (declare (string filename))
   (let ((total-frames-counter 0))
-    (with-source (source filename)
-      (with-tempo (tempo :buf-size 1024 :hop-size 512)
-        (with-fvecs ((sample-buffer 512)
-                     (out-fvec 1))
+    (aubio:with-source (source filename)
+      (aubio:with-tempo (tempo :buf-size 1024 :hop-size 512)
+        (aubio:with-fvecs ((sample-buffer 512)
+                           (out-fvec 1))
           (cffi:with-foreign-object (read-buffer :int)
             (loop
                :with times = '()
