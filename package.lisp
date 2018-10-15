@@ -5,6 +5,7 @@
            #:with-onset
            #:with-tempo
            #:with-source
+           #:with-pitch
            #:test-onset
            #:test-beats))
 
