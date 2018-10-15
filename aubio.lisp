@@ -29,6 +29,16 @@
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_tempo ,var))))
 
+(defmacro with-pitch
+    ((var &key (method "yinfft") (confidence .8)
+          (buf-size 1024) (hop-size 512) (sample-rate 44100))
+     &body body)
+  `(let ((,var (aubio:new_aubio_pitch ,method ,buf-size ,hop-size (round ,sample-rate))))
+     (aubio:aubio_pitch_set_unit ,var "midi")
+     (aubio:aubio_pitch_set_tolerance ,var (sample ,confidence))
+     (unwind-protect (progn ,@body)
+       (aubio:del_aubio_pitch ,var))))
+
 (defmacro with-source
     ((var filepath &key (sample-rate 44100) (window-size 512)) &body body)
   `(progn
