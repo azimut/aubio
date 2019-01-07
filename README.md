@@ -17,12 +17,12 @@ If instead aubio was compiled to use `double-float` for samples:
 ### Testing
 To get a list of where the sets occur in seconds:
 ```
-> (aubio::test-onset "/loop_amen.wav")
+> (aubio::test-onset (asdf:system-relative-pathname :aubio "static/loop_amen.wav"))
 (0.0 0.21201815 0.4361905 0.66521543 0.8878458 1.0956463 1.3077097 1.5368707 1.7533107)
 ```
 To get a list of where the beats occur in seconds:
 ```
-> (aubio::test-beats "/loop_amen_full.wav")
+> (aubio::test-beats (asdf:system-relative-pathname :aubio "static/loop_amen_full.wav"))
 (1.5101588 1.927415 2.3446486 2.7619047 3.2264853 3.6475737 4.0686393 4.7227664 5.143628 5.5645123 6.2237186)
 ```
 

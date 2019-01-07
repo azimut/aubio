@@ -83,7 +83,7 @@
 
 (defun test-onset (filename)
   "returns a list of the seconds where a set is found"
-  (declare (string filename))
+  (setf filename (namestring filename))
   (let ((total-frames-counter 0)
         (seconds '())
         (frames '()))
@@ -116,7 +116,7 @@
 
 (defun test-beats (filename)
   "returns a list of the seconds where a set is found"
-  (declare (string filename))
+  (setf filename (namestring filename))
   (let ((total-frames-counter 0)
         (seconds '())
         (frames '()))
@@ -147,7 +147,7 @@
 ;;--------------------------------------------------
 
 ;; (defun test-bpm (filename)
-;;   (declare (string filename))
+;;   (setf filename (namestring filename))
 ;;   (let* ((beats (test-beats filename))
 ;;          (lbeats (length beats)))
 ;;     (if (> lbeats 2)
