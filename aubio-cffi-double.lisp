@@ -6,14 +6,17 @@
 
 (cffi:load-foreign-library "libaubio.so") 
 (in-package :aubio)
+(defmacro define-constant (name value &optional doc)
+  `(defconstant ,name (if (boundp ',name) (symbol-value ',name) ,value)
+                      ,@(when doc (list doc))))
 
 
 
-(cl:defconstant AUBIO_SMPL_FMT "%lf")
+(define-constant AUBIO_SMPL_FMT "%lf")
 
 (cl:export 'AUBIO_SMPL_FMT)
 
-(cl:defconstant AUBIO_LSMP_FMT "%Lf")
+(define-constant AUBIO_LSMP_FMT "%Lf")
 
 (cl:export 'AUBIO_LSMP_FMT)
 

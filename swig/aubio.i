@@ -7,6 +7,9 @@
 %insert("lisphead") %{
 (cffi:load-foreign-library "libaubio.so") 
 (in-package :aubio)
+(defmacro define-constant (name value &optional doc)
+  `(defconstant ,name (if (boundp ',name) (symbol-value ',name) ,value)
+                      ,@(when doc (list doc))))
 %}
 
 %feature("export");

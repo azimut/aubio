@@ -1,6 +1,7 @@
-(in-package :aubio)
+(in-package #:aubio)
 
 (defmacro with-fvecs (fvecs &body body)
+  "Bind multiple fvecs"
   (let ((vars (mapcar #'car fvecs)))
     `(let ,(mapcar (lambda (x) `(,(car x) (aubio:new_fvec ,@(cdr x))))
                    fvecs)
@@ -9,13 +10,12 @@
                   vars)))))
 
 (defmacro with-fvec ((var hop-size) &body body)
+  "Bind a fvec"
   `(let ((,var (aubio:new_fvec ,hop-size)))
      (unwind-protect (progn ,@body)
        (aubio:del_fvec ,var))))
 
-(defmacro with-onset
-    ((var &key (method "default") (buf-size 1024) (hop-size 512) (sample-rate 44100))
-     &body body)
+(defmacro with-onset ((var &key (method "default") (buf-size 1024) (hop-size 512) (sample-rate 44100)) &body body)
   `(let ((,var (aubio:new_aubio_onset ,method ,buf-size ,hop-size ,sample-rate)))
      (aubio:aubio_onset_set_minioi_ms ,var (sample 12))
      (aubio:aubio_onset_set_threshold ,var (sample .3))
