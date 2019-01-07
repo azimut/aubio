@@ -1,7 +1,13 @@
 (in-package #:aubio)
 
+(defvar *default-buf-size* 1024)
+(defvar *default-hop-size* 512)
+(defvar *default-sample-rate* 44100)
+
+;;--------------------------------------------------
+
 (defmacro with-fvecs (fvecs &body body)
-  "Bind multiple fvecs"
+  "Bind multiple fvecs and free them after block ends."
   (let ((vars (mapcar #'car fvecs)))
     `(let ,(mapcar (lambda (x) `(,(car x) (aubio:new_fvec ,@(cdr x))))
                    fvecs)
@@ -10,42 +16,68 @@
                   vars)))))
 
 (defmacro with-fvec ((var hop-size) &body body)
-  "Bind a fvec"
+  "Bind a fvec and free it after block ends."
   `(let ((,var (aubio:new_fvec ,hop-size)))
      (unwind-protect (progn ,@body)
        (aubio:del_fvec ,var))))
 
-(defmacro with-onset ((var &key (method "default") (buf-size 1024) (hop-size 512) (sample-rate 44100)) &body body)
+;;--------------------------------------------------
+
+(defmacro with-onset ((var &key
+                           (method "default")
+                           (threshold .3)
+                           (minioi-ms 12)
+                           (buf-size *default-buf-size*)
+                           (hop-size *default-hop-size*)
+                           (sample-rate *default-sample-rate*))
+                      &body body)
+  "Allocate an onset ANALYSIS object and free it after block ends."
   `(let ((,var (aubio:new_aubio_onset ,method ,buf-size ,hop-size ,sample-rate)))
-     (aubio:aubio_onset_set_minioi_ms ,var (sample 12))
-     (aubio:aubio_onset_set_threshold ,var (sample .3))
+     (aubio:aubio_onset_set_minioi_ms ,var (sample ,minioi-ms))
+     (aubio:aubio_onset_set_threshold ,var (sample ,threshold))
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_onset ,var))))
 
-(defmacro with-tempo
-    ((var &key (method "specdiff") (buf-size 1024) (hop-size 512) (sample-rate 44100))
-     &body body)
+(defmacro with-tempo ((var &key
+                           (method "specdiff")
+                           (buf-size *default-buf-size*)
+                           (hop-size *default-hop-size*)
+                           (sample-rate *default-sample-rate*))
+                      &body body)
+  "Allocate an tempo ANALYSIS object and free it after block ends."
   `(let ((,var (aubio:new_aubio_tempo ,method ,buf-size ,hop-size (round ,sample-rate))))
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_tempo ,var))))
 
-(defmacro with-pitch
-    ((var &key (method "yinfft") (confidence .8)
-          (buf-size 1024) (hop-size 512) (sample-rate 44100))
-     &body body)
+(defmacro with-pitch ((var &key
+                           (method "yinfft")
+                           (confidence .8)
+                           (buf-size *default-buf-size*)
+                           (hop-size *default-hop-size*)
+                           (sample-rate *default-sample-rate*))
+                      &body body)
+  "Allocate an audio pitch ANALYSIS object and free it after block ends."
   `(let ((,var (aubio:new_aubio_pitch ,method ,buf-size ,hop-size (round ,sample-rate))))
      (aubio:aubio_pitch_set_unit ,var "midi")
      (aubio:aubio_pitch_set_tolerance ,var (sample ,confidence))
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_pitch ,var))))
 
-(defmacro with-source
-    ((var filepath &key (sample-rate 44100) (window-size 512)) &body body)
+;;--------------------------------------------------
+
+(defmacro with-source ((var filepath &key
+                            (sample-rate *default-sample-rate*)
+                            (hop-size *default-hop-size*))
+                       &body body)
+  "Input. Allocate a SOURCE and free it after block ends.
+   Example:
+   (with-source (s \"/home/user/a.wav\")
+     ...)"
   `(progn
      (assert (uiop:file-exists-p ,filepath))
-     (let ((,var (aubio:new_aubio_source ,filepath ,sample-rate ,window-size)))
-      (unwind-protect (progn ,@body)
-        (aubio:del_aubio_source ,var)))))
+     (let ((,var (aubio:new_aubio_source ,filepath ,sample-rate ,hop-size)))
+       (unwind-protect (progn ,@body)
+         (aubio:del_aubio_source ,var)))))
 
 ;;----------------------------------------
 

@@ -1,10 +1,11 @@
 ;;;; aubio.asd
 
 (asdf:defsystem #:aubio
-  :description "Describe aubio here"
-  :author "Your Name <your.name@example.com>"
-  :license  "Specify license here"
-  :version "0.0.2"
+  :description "raw bindings for aubio"
+  :author "azimut <azimut.github@protonmail.com>"
+  :license "GNU GPL, version 3"
+  :homepage "https://github.com/azimut/aubio"
+  :version "0.0.3"
   :serial t
   :depends-on (#:cffi)
   :components ((:file "package")
@@ -12,10 +13,11 @@
                (:file "aubio")))
 
 (asdf:defsystem #:aubio/double
-  :description "Describe aubio here"
-  :author "Your Name <your.name@example.com>"
-  :license  "Specify license here"
-  :version "0.0.2"
+  :description "raw bindings for aubio"
+  :author "azimut <azimut.github@protonmail.com>"
+  :license "GNU GPL, version 3"
+  :homepage "https://github.com/azimut/aubio"
+  :version "0.0.3"
   :serial t
   :depends-on (#:cffi)
   :components ((:file "package-double")

@@ -4,15 +4,17 @@ Lisp bindings for [aubio](https://aubio.org/). Needs aubio compiled with libsndf
 
 ## Usage
 
-If aubio was compiled to use `float` for samples (default) use:
+### Loading
+If aubio was compiled to use `single-float` for samples (default) use:
 ```
 > (ql:quickload :aubio)
 ```
-If instead aubio was compiled to use `double` for samples:
+If instead aubio was compiled to use `double-float` for samples:
 ```
 > (ql:quickload :aubio/double)
 ```
 
+### Testing
 To get a list of where the sets occur in seconds:
 ```
 > (aubio::test-onset "/loop_amen.wav")
