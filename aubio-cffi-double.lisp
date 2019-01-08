@@ -422,6 +422,26 @@
 
 (cl:export 'aubio_freqtobin)
 
+(cffi:defcfun ("aubio_hztomel" aubio_hztomel) :double
+  (freq :double))
+
+(cl:export 'aubio_hztomel)
+
+(cffi:defcfun ("aubio_meltohz" aubio_meltohz) :double
+  (mel :double))
+
+(cl:export 'aubio_meltohz)
+
+(cffi:defcfun ("aubio_hztomel_htk" aubio_hztomel_htk) :double
+  (freq :double))
+
+(cl:export 'aubio_hztomel_htk)
+
+(cffi:defcfun ("aubio_meltohz_htk" aubio_meltohz_htk) :double
+  (mel :double))
+
+(cl:export 'aubio_meltohz_htk)
+
 (cffi:defcfun ("aubio_freqtomidi" aubio_freqtomidi) :double
   (freq :double))
 
@@ -813,6 +833,28 @@
 
 (cl:export 'aubio_filterbank_set_coeffs)
 
+(cffi:defcfun ("aubio_filterbank_set_norm" aubio_filterbank_set_norm) :unsigned-int
+  (f :pointer)
+  (norm :double))
+
+(cl:export 'aubio_filterbank_set_norm)
+
+(cffi:defcfun ("aubio_filterbank_get_norm" aubio_filterbank_get_norm) :double
+  (f :pointer))
+
+(cl:export 'aubio_filterbank_get_norm)
+
+(cffi:defcfun ("aubio_filterbank_set_power" aubio_filterbank_set_power) :unsigned-int
+  (f :pointer)
+  (power :double))
+
+(cl:export 'aubio_filterbank_set_power)
+
+(cffi:defcfun ("aubio_filterbank_get_power" aubio_filterbank_get_power) :double
+  (f :pointer))
+
+(cl:export 'aubio_filterbank_get_power)
+
 (cffi:defcfun ("aubio_filterbank_set_triangle_bands" aubio_filterbank_set_triangle_bands) :unsigned-int
   (fb :pointer)
   (freqs :pointer)
@@ -825,6 +867,22 @@
   (samplerate :double))
 
 (cl:export 'aubio_filterbank_set_mel_coeffs_slaney)
+
+(cffi:defcfun ("aubio_filterbank_set_mel_coeffs" aubio_filterbank_set_mel_coeffs) :unsigned-int
+  (fb :pointer)
+  (samplerate :double)
+  (fmin :double)
+  (fmax :double))
+
+(cl:export 'aubio_filterbank_set_mel_coeffs)
+
+(cffi:defcfun ("aubio_filterbank_set_mel_coeffs_htk" aubio_filterbank_set_mel_coeffs_htk) :unsigned-int
+  (fb :pointer)
+  (samplerate :double)
+  (fmin :double)
+  (fmax :double))
+
+(cl:export 'aubio_filterbank_set_mel_coeffs_htk)
 
 (cffi:defcfun ("new_aubio_mfcc" new_aubio_mfcc) :pointer
   (buf_size :unsigned-int)
@@ -845,6 +903,47 @@
   (out :pointer))
 
 (cl:export 'aubio_mfcc_do)
+
+(cffi:defcfun ("aubio_mfcc_set_power" aubio_mfcc_set_power) :unsigned-int
+  (mf :pointer)
+  (power :double))
+
+(cl:export 'aubio_mfcc_set_power)
+
+(cffi:defcfun ("aubio_mfcc_get_power" aubio_mfcc_get_power) :unsigned-int
+  (mf :pointer))
+
+(cl:export 'aubio_mfcc_get_power)
+
+(cffi:defcfun ("aubio_mfcc_set_scale" aubio_mfcc_set_scale) :unsigned-int
+  (mf :pointer)
+  (scale :double))
+
+(cl:export 'aubio_mfcc_set_scale)
+
+(cffi:defcfun ("aubio_mfcc_get_scale" aubio_mfcc_get_scale) :unsigned-int
+  (mf :pointer))
+
+(cl:export 'aubio_mfcc_get_scale)
+
+(cffi:defcfun ("aubio_mfcc_set_mel_coeffs" aubio_mfcc_set_mel_coeffs) :unsigned-int
+  (mf :pointer)
+  (fmin :double)
+  (fmax :double))
+
+(cl:export 'aubio_mfcc_set_mel_coeffs)
+
+(cffi:defcfun ("aubio_mfcc_set_mel_coeffs_htk" aubio_mfcc_set_mel_coeffs_htk) :unsigned-int
+  (mf :pointer)
+  (fmin :double)
+  (fmax :double))
+
+(cl:export 'aubio_mfcc_set_mel_coeffs_htk)
+
+(cffi:defcfun ("aubio_mfcc_set_mel_coeffs_slaney" aubio_mfcc_set_mel_coeffs_slaney) :unsigned-int
+  (mf :pointer))
+
+(cl:export 'aubio_mfcc_set_mel_coeffs_slaney)
 
 (cffi:defcfun ("aubio_specdesc_do" aubio_specdesc_do) :void
   (o :pointer)
@@ -1332,6 +1431,17 @@
   (minioi_ms :double))
 
 (cl:export 'aubio_notes_set_minioi_ms)
+
+(cffi:defcfun ("aubio_notes_get_release_drop" aubio_notes_get_release_drop) :double
+  (o :pointer))
+
+(cl:export 'aubio_notes_get_release_drop)
+
+(cffi:defcfun ("aubio_notes_set_release_drop" aubio_notes_set_release_drop) :unsigned-int
+  (o :pointer)
+  (release_drop :double))
+
+(cl:export 'aubio_notes_set_release_drop)
 
 (cffi:defcfun ("new_aubio_source" new_aubio_source) :pointer
   (uri :string)
