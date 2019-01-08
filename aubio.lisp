@@ -27,12 +27,14 @@
                            (method "default")
                            (threshold .3)
                            (minioi-ms 12)
+                           (silence -90)
                            (buf-size *default-buf-size*)
                            (hop-size *default-hop-size*)
                            (sample-rate *default-sample-rate*))
                       &body body)
   "Allocate an onset ANALYSIS object and free it after block ends."
   `(let ((,var (aubio:new_aubio_onset ,method ,buf-size ,hop-size ,sample-rate)))
+     (aubio:aubio_onset_set_silence ,var (sample ,silence))
      (aubio:aubio_onset_set_minioi_ms ,var (sample ,minioi-ms))
      (aubio:aubio_onset_set_threshold ,var (sample ,threshold))
      (unwind-protect (progn ,@body)
@@ -40,18 +42,23 @@
 
 (defmacro with-tempo ((var &key
                            (method "specdiff")
+                           (threshold .3)
+                           (silence -70)
                            (buf-size *default-buf-size*)
                            (hop-size *default-hop-size*)
                            (sample-rate *default-sample-rate*))
                       &body body)
   "Allocate an tempo ANALYSIS object and free it after block ends."
   `(let ((,var (aubio:new_aubio_tempo ,method ,buf-size ,hop-size (round ,sample-rate))))
+     (aubio:aubio_tempo_set_threshold ,var ,threshold)
+     (aubio:aubio_tempo_set_silence ,var ,silence)
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_tempo ,var))))
 
 (defmacro with-pitch ((var &key
                            (method "yinfft")
                            (confidence .8)
+                           (silence -90)
                            (buf-size *default-buf-size*)
                            (hop-size *default-hop-size*)
                            (sample-rate *default-sample-rate*))
@@ -59,6 +66,7 @@
   "Allocate an audio pitch ANALYSIS object and free it after block ends."
   `(let ((,var (aubio:new_aubio_pitch ,method ,buf-size ,hop-size (round ,sample-rate))))
      (aubio:aubio_pitch_set_unit ,var "midi")
+     (aubio:aubio_pitch_set_silence ,var ,silence)
      (aubio:aubio_pitch_set_tolerance ,var (sample ,confidence))
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_pitch ,var))))
