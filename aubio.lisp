@@ -50,8 +50,8 @@
                       &body body)
   "Allocate an tempo ANALYSIS object and free it after block ends."
   `(let ((,var (aubio:new_aubio_tempo ,method ,buf-size ,hop-size (round ,sample-rate))))
-     (aubio:aubio_tempo_set_threshold ,var ,threshold)
-     (aubio:aubio_tempo_set_silence ,var ,silence)
+     (aubio:aubio_tempo_set_threshold ,var (sample ,threshold))
+     (aubio:aubio_tempo_set_silence ,var (sample ,silence))
      (unwind-protect (progn ,@body)
        (aubio:del_aubio_tempo ,var))))
 
