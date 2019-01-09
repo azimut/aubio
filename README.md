@@ -18,12 +18,18 @@ If instead aubio was compiled to use `double-float` for samples:
 To get a list of where the sets occur in seconds:
 ```
 > (aubio::test-onset (asdf:system-relative-pathname :aubio "static/loop_amen.wav"))
-(0.0 0.21201815 0.4361905 0.66521543 0.8878458 1.0956463 1.3077097 1.5368707 1.7533107)
+(0.0d0 0.21201814058956917d0 0.4364625850340136d0 0.6651700680272109d0
+ 0.8877777777777778d0 1.09562358276644d0 1.307936507936508d0
+ 1.5369160997732427d0 1.753310657596372d0)
+(0 9350 19248 29334 39151 48317 57680 67778 77321)
 ```
 To get a list of where the beats occur in seconds:
 ```
 > (aubio::test-beats (asdf:system-relative-pathname :aubio "static/loop_amen_full.wav"))
-(1.5101588 1.927415 2.3446486 2.7619047 3.2264853 3.6475737 4.0686393 4.7227664 5.143628 5.5645123 6.2237186)
+(0.0d0 0.21201814058956917d0 0.4364625850340136d0 0.6651700680272109d0
+ 0.8877777777777778d0 1.09562358276644d0 1.307936507936508d0
+ 1.5369160997732427d0 1.753310657596372d0)
+(0 9350 19248 29334 39151 48317 57680 67778 77321)
 ```
 
 ## See also
@@ -36,5 +42,4 @@ To get a list of where the beats occur in seconds:
 ## TODO
 
 - BPM
-- incudine integration
 - get sample-rate instead of hardcoded 44100
