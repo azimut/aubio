@@ -1,5 +1,5 @@
 (uiop:define-package  #:aubio
-    (:use #:cl)
+  (:use #:cl)
   (:export #:with-fvecs
            #:with-fvec
            #:with-onset
@@ -12,3 +12,6 @@
 (in-package :aubio)
 (defun sample (n)
   (coerce n 'single-float))
+(defvar *default-buf-size* 1024)
+(defvar *default-hop-size* 512)
+(defvar *default-sample-rate* 44100)

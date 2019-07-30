@@ -1,19 +1,13 @@
 (in-package #:aubio)
 
-(defvar *default-buf-size* 1024)
-(defvar *default-hop-size* 512)
-(defvar *default-sample-rate* 44100)
-
-;;--------------------------------------------------
-
 (defmacro with-fvecs (fvecs &body body)
   "Bind multiple fvecs and free them after block ends."
   (let ((vars (mapcar #'car fvecs)))
     `(let ,(mapcar (lambda (x) `(,(car x) (aubio:new_fvec ,@(cdr x))))
-                   fvecs)
-      (unwind-protect (progn ,@body)
-        ,@(mapcar (lambda (x) `(aubio:del_fvec ,x))
-                  vars)))))
+            fvecs)
+       (unwind-protect (progn ,@body)
+         ,@(mapcar (lambda (x) `(aubio:del_fvec ,x))
+                   vars)))))
 
 (defmacro with-fvec ((var hop-size) &body body)
   "Bind a fvec and free it after block ends."
@@ -134,22 +128,22 @@
                            (out-fvec 1))
           (cffi:with-foreign-object (read-buffer :int)
             (loop
-               ;; Perform onset calculation
-               (aubio:aubio_source_do source sample-buffer read-buffer)
-               (sb-int:with-float-traps-masked (:divide-by-zero)
-                 (aubio:aubio_tempo_do tempo sample-buffer out-fvec))
-               ;; Retrieve result
-               (let ((in-beat (aubio:fvec_get_sample out-fvec 0))
-                     (no-of-bytes-read (cffi:mem-ref read-buffer :int)))
-                 (incf total-frames-counter no-of-bytes-read)
-                 (when (> in-beat 0)
-                   (push (aubio:aubio_tempo_get_last_s tempo) seconds)
-                   (push (aubio:aubio_tempo_get_last tempo) frames))
-                 (when (not (= 512 no-of-bytes-read))
-                   ;; Let's output one last onset to mark the end of the file
-                   (push (sample (/ total-frames-counter 44100)) seconds)
-                   (push total-frames-counter frames)
-                   (return))))
+              ;; Perform onset calculation
+              (aubio:aubio_source_do source sample-buffer read-buffer)
+              (sb-int:with-float-traps-masked (:divide-by-zero)
+                (aubio:aubio_tempo_do tempo sample-buffer out-fvec))
+              ;; Retrieve result
+              (let ((in-beat (aubio:fvec_get_sample out-fvec 0))
+                    (no-of-bytes-read (cffi:mem-ref read-buffer :int)))
+                (incf total-frames-counter no-of-bytes-read)
+                (when (> in-beat 0)
+                  (push (aubio:aubio_tempo_get_last_s tempo) seconds)
+                  (push (aubio:aubio_tempo_get_last tempo) frames))
+                (when (not (= 512 no-of-bytes-read))
+                  ;; Let's output one last onset to mark the end of the file
+                  (push (sample (/ total-frames-counter 44100)) seconds)
+                  (push total-frames-counter frames)
+                  (return))))
             (values (reverse seconds) (reverse frames))))))))
 
 ;;--------------------------------------------------
